@@ -4,10 +4,6 @@ export interface Genre {
   name: string;
   image_background: string;
 }
-interface FetchedGenreResponse {
-  count: number;
-  results: Genre[];
-}
 
 const useGenres = () => useData<Genre>("/genres");
 
