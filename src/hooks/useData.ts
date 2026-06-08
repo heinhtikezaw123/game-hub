@@ -8,7 +8,7 @@ interface FetchedDataResponse<T> {
   results: T[];
 }
 
-const useData = <T>(endpoint: string, selectedGenre?: Genre | null) => {
+const useData = <T>(endpoint: string, params?: object) => {
   const [data, setData] = useState<T[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -19,9 +19,7 @@ const useData = <T>(endpoint: string, selectedGenre?: Genre | null) => {
     apiClient
       .get<FetchedDataResponse<T>>(endpoint, {
         signal: controller.signal,
-        params: {
-          genres: selectedGenre?.id,
-        },
+        params,
       })
       .then((res) => {
         setData(res.data.results);
@@ -34,7 +32,7 @@ const useData = <T>(endpoint: string, selectedGenre?: Genre | null) => {
       });
 
     return () => controller.abort();
-  }, [selectedGenre]);
+  }, [JSON.stringify(params)]);
 
   return { data, error, isLoading };
 };
