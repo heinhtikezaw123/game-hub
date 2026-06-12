@@ -17,12 +17,14 @@ export interface GameQuery {
   genre : Genre | null;
   platform : Platform | null;
   sortOrder : string;
+  searchValue : string;
 }
 
 const useGames = (gameQuery : GameQuery) => useData<Game>("/games",{
   genres : gameQuery.genre?.id,
   platforms : gameQuery.platform?.id,
-  ordering : gameQuery.sortOrder
+  ordering : gameQuery.sortOrder,
+  search : gameQuery.searchValue
 });
 
 export default useGames;
